@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/web/next.config.mjs",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "apps/bot/api/**/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/telegram",
+      "dest": "/apps/bot/api/telegram.ts"
+    }
+  ],
+  "functions": {
+    "apps/bot/api/**/*.ts": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 10
+    }
+  }
+}
