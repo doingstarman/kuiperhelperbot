@@ -1,0 +1,49 @@
+:root {
+  --bg: #0f172a;          /* slate-900 */
+  --panel: #111827ee;     /* almost black with alpha */
+  --text: #e5e7eb;        /* gray-200 */
+  --muted: #94a3b8;       /* slate-400 */
+  --accent: #60a5fa;      /* blue-400 */
+  --button-shadow: 0 10px 20px rgba(0,0,0,.35), inset 0 -6px 0 rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 600px at 10% -10%, #1f2937 0%, transparent 60%),
+              radial-gradient(900px 500px at 120% 10%, #0b1020 0%, transparent 55%),
+              var(--bg);
+  color: var(--text);
+}
+
+#app { max-width: 460px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+.app-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 12px; padding: 16px; background: linear-gradient(180deg, rgba(17,24,39,.9), rgba(17,24,39,.65)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,.06); }
+.titles .title { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: .2px; }
+.titles .subtitle { margin: 2px 0 0; color: var(--muted); }
+
+.back-button { appearance: none; border: none; background: linear-gradient(180deg,#374151,#111827); color: #e5e7eb; padding: 10px 14px; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: var(--button-shadow); transform: translateY(0); transition: transform .08s ease, filter .08s ease; }
+.back-button:active { transform: translateY(3px); filter: brightness(.96); box-shadow: 0 6px 12px rgba(0,0,0,.45), inset 0 -3px 0 rgba(0,0,0,.4); }
+
+.app-footer { padding: 24px 16px 32px; text-align: center; color: var(--muted); }
+
+#view { padding: 16px; display: grid; gap: 14px; }
+
+/* 3D primary buttons */
+.btn3d { appearance: none; border: none; width: 100%; padding: 14px 18px; border-radius: 16px; font-weight: 800; letter-spacing: .4px; cursor: pointer; color: white; background: linear-gradient(180deg,#60a5fa,#2563eb); box-shadow: var(--button-shadow); transform: translateY(0); transition: transform .08s ease, box-shadow .08s ease, filter .08s ease; }
+.btn3d:active { transform: translateY(3px); box-shadow: 0 6px 12px rgba(0,0,0,.45), inset 0 -3px 0 rgba(0,0,0,.4); filter: brightness(.97); }
+
+/* Brand buttons */
+.btn-github { background: linear-gradient(180deg,#24292e,#0f1113); }
+.btn-github::before { content:""; }
+
+.btn-ig { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+.btn-kuiper { background: linear-gradient(180deg,#0ea5e9,#1e293b); }
+
+.card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 18px; padding: 16px; }
+
+.muted { color: var(--muted); }
+
