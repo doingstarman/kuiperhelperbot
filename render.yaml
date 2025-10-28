@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: kuiper-belt-bot
+    env: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BOT_TOKEN
+        sync: false
+      - key: CHANNEL_ID
+        sync: false
+      - key: WEB_APP_URL
+        sync: false

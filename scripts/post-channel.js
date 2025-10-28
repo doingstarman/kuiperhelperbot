@@ -14,21 +14,16 @@ const bot = new Telegraf(BOT_TOKEN);
 
 (async () => {
   try {
-    await bot.telegram.sendMessage(
-      CHANNEL_ID,
-      'waitingstarman — мини‑приложение',
-      {
-        reply_markup: {
-          inline_keyboard: [[{ text: 'Открыть', web_app: { url: WEB_APP_URL } }]],
-        },
-      }
-    );
+    await bot.telegram.sendMessage(CHANNEL_ID, 'waitingstarman приглашает в мини-приложение', {
+      reply_markup: {
+        inline_keyboard: [[{ text: 'Перейти', web_app: { url: WEB_APP_URL } }]],
+      },
+    });
     console.log('Posted to channel successfully');
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Failed to post to channel', error);
     process.exit(1);
   } finally {
     process.exit(0);
   }
 })();
-

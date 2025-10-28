@@ -10,7 +10,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID; // @username или -100...
 
 if (!BOT_TOKEN) {
-  console.warn('[warn] BOT_TOKEN не задан. Бот не будет запущен.');
+  console.warn('[warn] BOT_TOKEN не найден. Добавьте переменную окружения в .env');
 }
 
 // Express server to host the mini app
@@ -27,38 +27,38 @@ const server = app.listen(PORT, () => {
 });
 
 // Telegram bot (long polling)
-let bot; 
+let bot;
 if (BOT_TOKEN) {
   bot = new Telegraf(BOT_TOKEN);
 
-  bot.start((ctx) => {
-    return ctx.reply(
-      'Мини‑приложение waitingstarman',
-      Markup.inlineKeyboard([
-        [Markup.button.webApp('Открыть мини‑приложение', WEB_APP_URL)],
-      ])
-    );
-  });
+  bot.start((ctx) =>
+    ctx.reply(
+      'Привет! Это мини-приложение waitingstarman.',
+      Markup.inlineKeyboard([[Markup.button.webApp('Открыть мини-приложение', WEB_APP_URL)]])
+    )
+  );
 
-  bot.command('app', (ctx) => {
-    return ctx.reply(
-      'Открыть мини‑приложение',
-      Markup.inlineKeyboard([[Markup.button.webApp('Открыть', WEB_APP_URL)]])
-    );
-  });
+  bot.command('app', (ctx) =>
+    ctx.reply('Открыть мини-приложение', Markup.inlineKeyboard([[Markup.button.webApp('Перейти', WEB_APP_URL)]]))
+  );
 
   bot.command('post_channel', async (ctx) => {
-    if (!CHANNEL_ID) return ctx.reply('CHANNEL_ID не задан в .env');
-    await ctx.telegram.sendMessage(
-      CHANNEL_ID,
-      'waitingstarman — мини‑приложение',
-      {
+    if (!CHANNEL_ID) {
+      return ctx.reply('CHANNEL_ID не указан в .env');
+    }
+
+    try {
+      await ctx.telegram.sendMessage(CHANNEL_ID, 'waitingstarman приглашает в мини-приложение', {
         reply_markup: {
-          inline_keyboard: [[{ text: 'Открыть', web_app: { url: WEB_APP_URL } }]],
+          inline_keyboard: [[{ text: 'Перейти', web_app: { url: WEB_APP_URL } }]],
         },
-      }
-    );
-    return ctx.reply('Пост отправлен в канал');
+      });
+
+      return ctx.reply('Сообщение успешно отправлено в канал.');
+    } catch (error) {
+      console.error('[bot] не удалось отправить сообщение в канал', error);
+      return ctx.reply('Ошибка отправки. Проверьте доступ бота к каналу.');
+    }
   });
 
   bot.launch().then(() => console.log('[bot] started'));
@@ -73,4 +73,3 @@ if (BOT_TOKEN) {
     bot.stop('SIGTERM');
   });
 }
-
