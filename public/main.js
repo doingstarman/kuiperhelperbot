@@ -17,10 +17,10 @@
     home() {
       view.innerHTML = `
         <section class="card">
-          <p class="muted">Добро пожаловать в Kuiper Belt. Выберите действие, чтобы продолжить.</p>
+          <p class="muted">Мини-приложение waitingstarman: мгновенная связь и подборка ссылок на любимые проекты.</p>
         </section>
-        <button class="btn3d" data-nav="contact">Написать в Telegram</button>
-        <button class="btn3d" data-nav="links">Полезные ссылки</button>
+        <button class="btn3d" data-nav="contact">Связь со мной</button>
+        <button class="btn3d" data-nav="links">Интересные ссылки</button>
       `;
     },
     contact() {
@@ -28,7 +28,7 @@
       const link = window.APP_LINKS?.CONTACT_TG_URL || '#';
       view.innerHTML = `
         <section class="card">
-          <p>Свяжитесь в Telegram: <strong>@${username}</strong></p>
+          <p>Нажмите, чтобы написать <strong>@${username}</strong> в Telegram.</p>
         </section>
         <a class="btn3d" href="${link}">Открыть чат</a>
       `;
@@ -37,7 +37,7 @@
       const { KUIPER_URL, GITHUB_URL, INSTAGRAM_URL } = window.APP_LINKS || {};
       view.innerHTML = `
         <section class="card">
-          <p class="muted">Откройте наши проекты и страницы в сети.</p>
+          <p class="muted">Все важные площадки Kuiper Belt — выбирайте и переходите.</p>
         </section>
         <a class="btn3d btn-kuiper" href="${KUIPER_URL}" target="_blank" rel="noopener">Сайт Kuiper Belt</a>
         <a class="btn3d btn-github" href="${GITHUB_URL}" target="_blank" rel="noopener">GitHub</a>
@@ -49,7 +49,9 @@
   function render() {
     const hash = location.hash.replace('#', '') || 'home';
     routes[hash]?.();
-    backBtn.style.visibility = hash === 'home' ? 'hidden' : 'visible';
+    const isHome = hash === 'home';
+    backBtn.disabled = isHome;
+    backBtn.classList.toggle('back-button--disabled', isHome);
   }
 
   // Navigation handlers
