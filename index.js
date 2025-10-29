@@ -5,12 +5,15 @@ const cors = require('cors');
 const { Telegraf, Markup } = require('telegraf');
 
 const PORT = process.env.PORT || 3000;
-const WEB_APP_URL = process.env.WEB_APP_URL || `http://localhost:${PORT}`;
+const WEBAPP_URL = process.env.WEBAPP_URL || process.env.WEB_APP_URL;
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID; // @username или -100...
 
 if (!BOT_TOKEN) {
   console.warn('[warn] BOT_TOKEN не найден. Добавьте переменную окружения в .env');
+}
+if (!WEBAPP_URL) {
+  console.warn('[warn] WEBAPP_URL не задан. Кнопки web_app не будут работать.');
 }
 
 // Express server to host the mini app
@@ -31,28 +34,46 @@ let bot;
 if (BOT_TOKEN) {
   bot = new Telegraf(BOT_TOKEN);
 
-  bot.start((ctx) =>
-    ctx.reply(
-      'Привет! Это мини-приложение waitingstarman.',
-      Markup.inlineKeyboard([[Markup.button.webApp('Открыть мини-приложение', WEB_APP_URL)]])
-    )
-  );
+  bot.start((ctx) => {
+    if (!WEBAPP_URL) {
+      return ctx.reply('Мини-приложение временно недоступно. Попробуйте позже.');
+    }
 
-  bot.command('app', (ctx) =>
-    ctx.reply('Открыть мини-приложение', Markup.inlineKeyboard([[Markup.button.webApp('Перейти', WEB_APP_URL)]]))
-  );
+    return ctx.reply(
+      'Привет! Это мини-приложение waitingstarman.',
+      Markup.inlineKeyboard([[Markup.button.webApp('Открыть мини-приложение', WEBAPP_URL)]])
+    );
+  });
+
+  bot.command('app', (ctx) => {
+    if (!WEBAPP_URL) {
+      return ctx.reply('Мини-приложение временно недоступно. Попробуйте позже.');
+    }
+
+    return ctx.reply(
+      'Открыть мини-приложение',
+      Markup.inlineKeyboard([[Markup.button.webApp('Перейти', WEBAPP_URL)]])
+    );
+  });
 
   bot.command('post_channel', async (ctx) => {
     if (!CHANNEL_ID) {
       return ctx.reply('CHANNEL_ID не указан в .env');
     }
+    if (!WEBAPP_URL) {
+      return ctx.reply('WEBAPP_URL не указан, ссылку отправить нельзя.');
+    }
 
     try {
-      await ctx.telegram.sendMessage(CHANNEL_ID, 'waitingstarman приглашает в мини-приложение', {
-        reply_markup: {
-          inline_keyboard: [[{ text: 'Перейти', web_app: { url: WEB_APP_URL } }]],
-        },
-      });
+      await ctx.telegram.sendMessage(
+        CHANNEL_ID,
+        'waitingstarman приглашает в мини-приложение',
+        {
+          reply_markup: {
+            inline_keyboard: [[{ text: 'Перейти', web_app: { url: WEBAPP_URL } }]],
+          },
+        }
+      );
 
       return ctx.reply('Сообщение успешно отправлено в канал.');
     } catch (error) {

@@ -11,11 +11,11 @@ Telegram-бот и мини-приложение для проекта waitingst
 1. Создайте файл `.env` по примеру `.env.example`:
    ```
    BOT_TOKEN=ваш_токен_бота
-   WEB_APP_URL=https://your-domain.example
+   WEBAPP_URL=https://your-domain.example
    CHANNEL_ID=@channel_username_or_-100xxxx
    PORT=3000
    ```
-2. Убедитесь, что значение `WEB_APP_URL` соответствует домену, где будет размещена статика мини-приложения (HTTPS обязателен для запуска в Telegram).
+2. Убедитесь, что значение `WEBAPP_URL` соответствует домену, где будет размещена статика мини-приложения (HTTPS обязателен для запуска в Telegram).
 3. Установите зависимости: `npm install`.
 
 ## Локальный запуск
@@ -29,7 +29,7 @@ Telegram-бот и мини-приложение для проекта waitingst
 
 ## Деплой
 
-1. **Фронтенд.** Разверните содержимое `public/` на статическом хостинге (Vercel, Netlify, GitHub Pages и т.д.) и обновите `WEB_APP_URL` в `.env`. Если используете Render с `render.yaml`, статика автоматически обслуживается Express-сервером — отдельный хост не требуется.
+1. **Фронтенд.** Разверните содержимое `public/` на статическом хостинге (Vercel, Netlify, GitHub Pages и т.д.) и обновите `WEBAPP_URL` в `.env`. Если используете Render с `render.yaml`, статика автоматически обслуживается Express-сервером — отдельный хост не требуется.
 2. **Сервер и бот.** Задеплойте `index.js` на любой Node.js-хостинг с поддержкой фоновых процессов (Render, Railway, Fly.io, VPS). Убедитесь, что:
    - заданы переменные окружения из `.env`;
    - стартовая команда `npm start`;
@@ -42,7 +42,7 @@ Telegram-бот и мини-приложение для проекта waitingst
    ```sh
    render blueprint launch render.yaml
    ```
-3. В веб-интерфейсе Render задайте значения `BOT_TOKEN`, `CHANNEL_ID`, `WEB_APP_URL` (обычно `https://<your-service>.onrender.com`) и перезапустите сервис.
+3. В веб-интерфейсе Render задайте значения `BOT_TOKEN`, `CHANNEL_ID`, `WEBAPP_URL` (обычно `https://<your-service>.onrender.com`) и перезапустите сервис.
 4. Проверка: `https://<your-service>.onrender.com/health` → `{ ok: true }`, команды бота работают.
 
 ## Подготовка к продакшену
