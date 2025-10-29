@@ -12,15 +12,21 @@
 
   const view = document.getElementById('view');
   const backBtn = document.getElementById('backBtn');
+  const header = document.querySelector('.app-header');
 
   const routes = {
     home() {
       view.innerHTML = `
-        <section class="card">
-          <p class="muted">Мини-приложение waitingstarman: мгновенная связь и подборка ссылок на любимые проекты.</p>
-        </section>
-        <button class="btn3d" data-nav="contact">Связь со мной</button>
-        <button class="btn3d" data-nav="links">Интересные ссылки</button>
+        <div class="home-screen">
+          <header>
+            <h1 class="home-title">waitingstarman</h1>
+            <p class="home-subtitle">Привет! Выбери, что тебя интересует</p>
+          </header>
+          <div class="neumo-stack">
+            <button class="neumo-button" data-nav="contact"><span>Связь со мной</span></button>
+            <button class="neumo-button" data-nav="links"><span>Интересные ссылки</span></button>
+          </div>
+        </div>
       `;
     },
     contact() {
@@ -50,6 +56,11 @@
     const hash = location.hash.replace('#', '') || 'home';
     routes[hash]?.();
     const isHome = hash === 'home';
+    view.classList.toggle('view-home', isHome);
+    view.classList.toggle('view-inner', !isHome);
+    if (header) {
+      header.style.display = isHome ? 'none' : 'flex';
+    }
     backBtn.disabled = isHome;
     backBtn.classList.toggle('back-button--disabled', isHome);
   }

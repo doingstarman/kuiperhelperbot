@@ -41,6 +41,25 @@ body {
 .app-footer { padding: 24px 16px 32px; text-align: center; color: var(--muted); }
 
 #view { padding: 16px; display: grid; gap: 14px; }
+#view.view-home { min-height: 100vh; padding: 32px 20px 40px; display: flex; align-items: center; justify-content: center; }
+#view.view-home .home-screen { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
+#view.view-home .home-title { margin: 0; font-size: 40px; font-weight: 800; letter-spacing: .4px; }
+#view.view-home .home-subtitle { margin: 0; color: rgba(229,231,235,.75); font-size: 17px; line-height: 1.6; }
+#view.view-home .neumo-stack { width: 100%; display: flex; flex-direction: column; gap: 18px; margin-top: 8px; }
+
+@media (min-width: 768px) {
+  #view.view-home { padding: 48px 24px 64px; }
+  #view.view-home .home-title { font-size: 48px; }
+  #view.view-home .home-subtitle { font-size: 19px; }
+}
+
+.neumo-button { width: 100%; border: none; border-radius: 28px; min-height: 68px; font-size: 20px; font-weight: 700; letter-spacing: .2px; color: white; background: linear-gradient(145deg, rgba(10,17,31,0.95), rgba(20,30,52,0.95)); box-shadow: 14px 14px 28px rgba(0,0,0,0.55), -12px -12px 24px rgba(255,255,255,0.04); position: relative; overflow: hidden; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+.neumo-button::after { content: ""; position: absolute; inset: 1px; border-radius: 26px; background: rgba(255,255,255,0.06); transition: background .15s ease, box-shadow .15s ease; }
+.neumo-button span { position: relative; z-index: 1; }
+.neumo-button:hover { transform: translateY(-3px); box-shadow: 16px 16px 32px rgba(0,0,0,0.55), -10px -10px 24px rgba(255,255,255,0.06); }
+.neumo-button:hover::after { background: rgba(255,255,255,0.08); }
+.neumo-button:active { transform: scale(.98); box-shadow: inset 8px 8px 16px rgba(0,0,0,0.4); }
+.neumo-button:active::after { background: rgba(255,255,255,0.04); box-shadow: inset -4px -4px 12px rgba(255,255,255,0.04); }
 
 /* 3D primary buttons */
 .btn3d { appearance: none; border: none; width: 100%; padding: 14px 18px; border-radius: 16px; font-weight: 800; letter-spacing: .4px; cursor: pointer; color: white; background: linear-gradient(180deg,#60a5fa,#2563eb); box-shadow: var(--button-shadow); transform: translateY(0); transition: transform .08s ease, box-shadow .08s ease, filter .08s ease; }
